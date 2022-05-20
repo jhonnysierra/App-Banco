@@ -54,7 +54,7 @@ public class ProductoServiceImpl implements IProductoService {
      *
      * @param idCliente id del cliente
      * @return lista de {@link ProductoDTO}
-     * @author <a href="julian.rivera@segurosbolivar.com"> Julian M Rivera</a>
+     * @author <a href="jhonnysierrap@gmail.com"> Jhonny Sierra</a>
      * @date 12-05-2022
      */
     @Override

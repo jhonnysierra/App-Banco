@@ -36,6 +36,7 @@ public class InversionController {
 
     /**
      * Metodo que permite consultar las inversiones del cliente
+     *
      * @param idCliente id del cliente a consultar
      * @return lista de {@link MisProductosDTO}
      * @author <a href="jhonnysierrap@gmail.com"> Jhonny Sierra Parra</a>
@@ -48,7 +49,8 @@ public class InversionController {
 
     /**
      * Metodo que permite validar si un cliente ya cumplio todos los requisitos en sus productos anteriores
-     * @param idCliente id del cliente
+     *
+     * @param idCliente Id del cliente
      * @return Boolean true si cumple o false si por alguna razon no puede hacer recomposicion
      * @author <a href="jhonnysierrap@gmail.com"> Jhonny Sierra Parra</a>
      * @date 12-05-2022
