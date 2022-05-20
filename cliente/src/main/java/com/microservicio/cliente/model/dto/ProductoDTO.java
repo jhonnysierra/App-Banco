@@ -5,7 +5,7 @@ import lombok.Data;
 import org.springframework.stereotype.Component;
 
 /**
- * @author <a href="julian.rivera@segurosbolivar.com"> Julian M Rivera</a>
+ * @author <a href="jhonnysierrap@gmail.com"> Jhonny Sierra Parra</a>
  * @version 1.0
  * @project empresa-de-inversion
  * @class ProductoDTO
@@ -23,5 +23,6 @@ public class ProductoDTO {
     private double montoMinimo;
     private double montoCompania;
     private Long ciudad;
+    private String nombreCiudad;
     private String origen;
 }
