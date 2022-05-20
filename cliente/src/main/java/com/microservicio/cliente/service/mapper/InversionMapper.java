@@ -30,10 +30,26 @@ public interface InversionMapper {
     @Mapping(source = "inversion.producto.id", target = "idProducto")
     public InversionDTO convertirInversionADTO(Inversion inversion);
 
+
+    /**
+     * Metodo que permite convertir una entidad {@link Inversion} en un objeto de la clase {@link MisProductosDTO}
+     * La etiqueta ignore es para que no devuelva campos
+     *
+     * @param inversion Entidad de tipo {@link Inversion}
+     * @return Entidad de tipo {@link MisProductosDTO}
+     */
     @Mapping(target = "estado",ignore = true)
     @Mapping(source = "inversion.producto.nombre", target = "productoNombre")
     public MisProductosDTO convertirEntidadAMisproductosDTO(Inversion inversion);
 
+    /**
+     * Metodo que permite convertir entidades de tipo Inversion a Mis productos DTO
+     * --- Cuando se trata de listas se debe crear el metodo que convierta una sola entidad. Para este caso
+     * --- existe el metodo convertirEntidadAMisproductosDTO() declarado en esta clase.
+     *
+     * @param listaInversion Lista de entidades de tipo {@link Inversion}
+     * @return Lista de {@link MisProductosDTO}
+     */
     @Mapping(target = "estado",ignore = true)
     @Mapping(source = "inversion.producto.nombre", target = "productoNombre")
     public List<MisProductosDTO> convertirListaEntidadAListaMisproductosDTO(List<Inversion> listaInversion);
