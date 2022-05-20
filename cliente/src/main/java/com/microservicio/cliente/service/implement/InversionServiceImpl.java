@@ -38,7 +38,9 @@ public class InversionServiceImpl implements IInversionService {
     }
 
     /**
-     * Metodo que permite crear una inversion inicial al momento del primero login del cliente. Solo se ejecuta la primera vez
+     * Metodo que permite crear una inversion inicial al momento del primero login del cliente.
+     * Solo se ejecuta la primera vez
+     *
      * @param inversionDTO recibe un DTO con el id del cliente y el saldo inicial
      * @return DTO de la inversion realizada.
      */
@@ -85,6 +87,7 @@ public class InversionServiceImpl implements IInversionService {
     /**
      * Metodo que permite consultar el saldo de un cliente teniendo en cuenta
      * todos los productos en los que ha invertido y que estan activos
+     *
      * @param id Identificador del cliente
      * @return saldo total del cliente en el sistema
      */
@@ -100,8 +103,9 @@ public class InversionServiceImpl implements IInversionService {
 
     /**
      * Metodo que permite hacer una recomposicion de los productos activos del cliente para invertir en otros.
+     *
      * @param inversionDTOS Lista DTO de inversiones
-     * @param idCliente Identificador del cliente
+     * @param idCliente     Identificador del cliente
      * @return
      */
     @Override
@@ -110,7 +114,7 @@ public class InversionServiceImpl implements IInversionService {
         // Se valida que el DTO y el id del cliente vengan con datos
         if (inversionDTOS.size() > 0 && idCliente != null) {
             // Se busca que el id corresponda a un cliente en caso contrario se lanza una excepcion
-            Cliente cliente = clienteRepository.findById(idCliente).orElseThrow(()-> new NotFoundException("No se encuentra el cliente"));
+            Cliente cliente = clienteRepository.findById(idCliente).orElseThrow(() -> new NotFoundException("No se encuentra el cliente"));
 
             // Se suman los saldos de las inversiones de la recomposicion
             BigDecimal sumaSaldoInversiones = utilidades.sumarSaldoInversiones(inversionDTOS);
@@ -127,7 +131,7 @@ public class InversionServiceImpl implements IInversionService {
                  * Posteriormente se debe almacenar la nueva inversion
                  */
                 List<Inversion> inversionesAnteriores = inversionRepository.consultarInversionesCliente(cliente.getId());
-                for (Inversion inversion: inversionesAnteriores) {
+                for (Inversion inversion : inversionesAnteriores) {
                     inversion.setFechaFinPortafolio(LocalDate.now());
                     inversionRepository.save(inversion);
                 }
@@ -145,10 +149,10 @@ public class InversionServiceImpl implements IInversionService {
                          * esta validacion en este punto. La inversion en el sistema se garantiza creando
                          * la inversion inicial del cliente.
                          */
-                        if (inversionDTO.getIdCliente().compareTo(idCliente)==0){
-                            Producto producto = productoRepository.findById(inversionDTO.getIdProducto()).orElseThrow(()-> new NotFoundException("No se encuentra el producto"));
-                            if (inversionDTO.getSaldo().compareTo(producto.getMontoMinimo())==0 ||
-                                    inversionDTO.getSaldo().compareTo(producto.getMontoMinimo())>0){
+                        if (inversionDTO.getIdCliente().compareTo(idCliente) == 0) {
+                            Producto producto = productoRepository.findById(inversionDTO.getIdProducto()).orElseThrow(() -> new NotFoundException("No se encuentra el producto"));
+                            if (inversionDTO.getSaldo().compareTo(producto.getMontoMinimo()) == 0 ||
+                                    inversionDTO.getSaldo().compareTo(producto.getMontoMinimo()) > 0) {
 
                                 Inversion inversion = inversionMapper.convertirDTOAInversion(inversionDTO);
 
@@ -161,11 +165,11 @@ public class InversionServiceImpl implements IInversionService {
                                  *  nuevas almacenadas
                                  */
                                 inversionNuevaDTOS.add(inversionMapper.convertirInversionADTO(inversionRepository.save(inversion)));
-                            }else{
+                            } else {
                                 throw new ConflictException
                                         ("El la cantidad invertida no coincide con el monto mínimo del producto");
                             }
-                        }else{
+                        } else {
                             throw new BadRequestException("Los identificadores del cliente no coinciden.");
                         }
                     } else {
@@ -174,7 +178,7 @@ public class InversionServiceImpl implements IInversionService {
                 }
                 // Si no hay excepciones se retorna el DTO con las inversiones almacenadas
                 return inversionNuevaDTOS;
-            }else{
+            } else {
                 throw new ConflictException("El saldo del cliente no coincide con el total de la recomposición");
             }
         } else {
@@ -195,12 +199,17 @@ public class InversionServiceImpl implements IInversionService {
                 List<Inversion> listaInversiones = inversionRepository.consultarInversionesCliente(idCliente);
                 if (listaInversiones.size() > 0) {
                     List<MisProductosDTO> listaMisProductos = inversionMapper.convertirListaEntidadAListaMisproductosDTO(listaInversiones);
+                    int i = 0;
                     for (MisProductosDTO misProductosDTO : listaMisProductos) {
                         if (misProductosDTO.getFechaActivacion().isAfter(LocalDate.now()) || misProductosDTO.getFechaActivacion().equals(LocalDate.now())) {
                             misProductosDTO.setEstado("EN PROCESO DE ACTIVACION");
                         } else {
                             misProductosDTO.setEstado("INVERSION ACTIVA");
                         }
+                        misProductosDTO.setSaldoInicialProducto
+                                (inversionRepository.obtenerSaldoInicial(
+                                        listaInversiones.get(i).getId(), misProductosDTO.getFechaActivacion()));
+                        i++;
                     }
                     return listaMisProductos;
                 } else {
@@ -217,6 +226,7 @@ public class InversionServiceImpl implements IInversionService {
 
     /**
      * Metodo que permite validar si un cliente ya cumplio todos los requisitos en sus productos anteriores
+     *
      * @param idCliente id del cliente
      * @return Boolean true si cumple o false si por alguna razon no puede hacer recomposicion
      * @author <a href="jhonnysierrap@gmail.com"> Jhonny Sierra Parra</a>
