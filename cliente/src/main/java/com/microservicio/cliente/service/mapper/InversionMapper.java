@@ -23,7 +23,7 @@ public interface InversionMapper {
 
     /**
      * Metodo que permite convertir una Inversion a DTO
-     * @param inversion {@link Inversion}
+     * @param inversion Entidad de tipo {@link Inversion}
      * @return
      */
     @Mapping(source = "inversion.cliente.id", target = "idCliente")

@@ -22,5 +22,6 @@ public class ProductoDTO {
     private double monto_minimo;
     private double monto_compania;
     private Long ciudad;
+    private String nombreCiudad;
     private String origen;
 }

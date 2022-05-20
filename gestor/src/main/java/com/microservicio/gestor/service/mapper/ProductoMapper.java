@@ -24,6 +24,7 @@ public interface ProductoMapper {
      */
     @Mapping(source = "productoDTO.gestor", target = "gestor.id")
     @Mapping(source = "productoDTO.ciudad", target = "ciudad.id")
+    @Mapping(source = "productoDTO.nombreCiudad", target = "ciudad.nombre")
     Producto convertirDTOAEntidad(ProductoDTO productoDTO);
 
     /**
@@ -34,6 +35,7 @@ public interface ProductoMapper {
      */
     @Mapping(source = "producto.gestor.id", target = "gestor")
     @Mapping(source = "producto.ciudad.id", target = "ciudad")
+    @Mapping(source = "producto.ciudad.nombre", target = "nombreCiudad")
     ProductoDTO convertirEntidadADTO(Producto producto);
 
     /**
@@ -44,5 +46,6 @@ public interface ProductoMapper {
      */
     @Mapping(source = "producto.gestor.id", target = "gestor")
     @Mapping(source = "producto.ciudad.id", target = "ciudad")
+    @Mapping(source = "producto.ciudad.nombre", target = "nombreCiudad")
     List<ProductoDTO> convertirListaEntidadAListaDTO(List<Producto> listaProducto);
 }

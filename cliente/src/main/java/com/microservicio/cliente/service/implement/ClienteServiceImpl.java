@@ -9,6 +9,7 @@ import com.microservicio.cliente.model.dto.ClienteDTO;
 import com.microservicio.cliente.repository.ClienteRepository;
 import com.microservicio.cliente.service.IClienteService;
 import com.microservicio.cliente.service.mapper.ClienteMapper;
+import com.microservicio.cliente.utilities.Config;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -25,6 +26,7 @@ public class ClienteServiceImpl implements IClienteService {
      */
     private final ClienteMapper clienteMapper;
     private final ClienteRepository clienteRepository;
+
 
     public ClienteServiceImpl(ClienteMapper clienteMapper, ClienteRepository clienteRepository) {
         this.clienteMapper = clienteMapper;

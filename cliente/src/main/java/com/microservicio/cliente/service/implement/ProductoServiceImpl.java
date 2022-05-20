@@ -10,6 +10,7 @@ import com.microservicio.cliente.repository.InversionRepository;
 import com.microservicio.cliente.repository.ProductoRepository;
 import com.microservicio.cliente.service.IProductoService;
 import com.microservicio.cliente.service.mapper.ProductoMapper;
+import com.microservicio.cliente.utilities.Config;
 import com.microservicio.cliente.utilities.Utilidades;
 import org.springframework.stereotype.Service;
 
@@ -31,22 +32,24 @@ public class ProductoServiceImpl implements IProductoService {
     private final InversionRepository inversionRepository;
     private final Utilidades utilidades;
     private final ProductoMapper productoMapper;
+    private final Config config;
 
     /**
      * Metodo constructor
-     *
-     * @param clienteRepository
+     *  @param clienteRepository
      * @param productoRepository
      * @param utilidades
      * @param inversionRepository
      * @param productoMapper
+     * @param config
      */
-    public ProductoServiceImpl(ClienteRepository clienteRepository, ProductoRepository productoRepository, Utilidades utilidades, InversionRepository inversionRepository, ProductoMapper productoMapper) {
+    public ProductoServiceImpl(ClienteRepository clienteRepository, ProductoRepository productoRepository, Utilidades utilidades, InversionRepository inversionRepository, ProductoMapper productoMapper, Config config) {
         this.clienteRepository = clienteRepository;
         this.productoRepository = productoRepository;
         this.utilidades = utilidades;
         this.inversionRepository = inversionRepository;
         this.productoMapper = productoMapper;
+        this.config = config;
     }
 
     /**
@@ -69,7 +72,8 @@ public class ProductoServiceImpl implements IProductoService {
 
                     if (inversionRepository.consultarSaldo(idCliente).compareTo(producto.getMontoCompania()) == 1
                             || inversionRepository.consultarSaldo(idCliente).compareTo(producto.getMontoCompania()) == 0) {
-                        if (producto.getCiudad().getId() == 2) {
+                        if (producto.getCiudad().getId() == cliente.getCiudad().getId()
+                                || producto.getCiudad().getId() == config.getCIUDAD_POR_DEFECTO_PRODUCTO()) {
                             listaProductoCliente.add(productoMapper.convertirEntidadADTO(producto));
                         }
                     }

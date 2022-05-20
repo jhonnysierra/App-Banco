@@ -201,7 +201,7 @@ public class InversionServiceImpl implements IInversionService {
                     List<MisProductosDTO> listaMisProductos = inversionMapper.convertirListaEntidadAListaMisproductosDTO(listaInversiones);
                     int i = 0;
                     for (MisProductosDTO misProductosDTO : listaMisProductos) {
-                        if (misProductosDTO.getFechaActivacion().isAfter(LocalDate.now()) || misProductosDTO.getFechaActivacion().equals(LocalDate.now())) {
+                        if (misProductosDTO.getFechaActivacion().isAfter(LocalDate.now())) {
                             misProductosDTO.setEstado("EN PROCESO DE ACTIVACION");
                         } else {
                             misProductosDTO.setEstado("INVERSION ACTIVA");
