@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
- * @author <a href="julian.rivera@segurosbolivar.com"> Julian M Rivera</a>
+ * @author <a href="jhonnysierrap@gmail.com"> Jhonny Sierra Parra</a>
  * @version 1.0
  * @project empresa-de-inversion
  * @class MisProductosDTO
@@ -18,11 +18,10 @@ import java.time.LocalDate;
 @Component
 public class MisProductosDTO {
     private String productoNombre;
+    private BigDecimal saldoInicialProducto;
     private LocalDate fechaSolicitud;
     private LocalDate fechaActivacion;
     private LocalDate fechaFinPortafolio;
     private BigDecimal saldo;
     private String estado;
-
-
 }
