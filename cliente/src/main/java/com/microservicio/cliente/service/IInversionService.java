@@ -22,21 +22,30 @@ public interface IInversionService {
      */
     public BigDecimal consultarSaldoCliente(Long id);
 
+    /**
+     * Metodo que permite hacer la recomposicion de un cliente
+     *
+     * @param inversionDTOS
+     * @param idCliente
+     * @return
+     */
     public List<InversionDTO> hacerRecomposicionCliente(List<InversionDTO> inversionDTOS, Long idCliente);
 
     /**
      * Metodo que permite consultar las inversiones del cliente
+     *
      * @param idCliente id del cliente a consultar
      * @return lista de {@link MisProductosDTO}
-     *  @author <a href="julian.rivera@segurosbolivar.com"> Julian M Rivera</a>
+     *  @author <a href="jhonnysierrap@gmail.com"> Jhonny Sierra P</a>
      * @date 12-05-2022
      */
     public List<MisProductosDTO> consultarInversionesCliente(Long idCliente);
 
     /**
+     * Metodo que permite validar si un cliente puede realizar una recomposicion
      *
-     * @param idCliente
-     * @return
+     * @param idCliente Identificador del cliente
+     * @return True si puede realizar la recomposicion y false en caso contrario
      */
     public Boolean ValidarRecomposicion(Long idCliente);
 }
