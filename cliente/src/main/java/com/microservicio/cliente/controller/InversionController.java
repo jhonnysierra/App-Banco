@@ -58,7 +58,7 @@ public class InversionController {
 
     /**
      * Metodo que permite crear la inversion inicial
-     * 
+     *
      * @param inversionDTO {@link InversionDTO} Datos para crear la inversion inicial
      * @return {@link InversionDTO} Datos almacenados de la inversion
      */
