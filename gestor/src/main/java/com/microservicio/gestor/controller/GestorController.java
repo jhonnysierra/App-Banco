@@ -3,10 +3,7 @@ package com.microservicio.gestor.controller;
 
 import com.microservicio.gestor.model.dto.GestorDTO;
 import com.microservicio.gestor.service.IGestorService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Clase controlador para manejar end points de gestores de inversión
@@ -14,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author: Julian Mauricio Rivera
  * @version: v1.0
  */
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/techcamp/api/1.0")
 public class GestorController {

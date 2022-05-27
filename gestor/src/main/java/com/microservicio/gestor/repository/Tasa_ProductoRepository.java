@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
@@ -19,4 +20,8 @@ public interface Tasa_ProductoRepository extends JpaRepository<Tasa_Producto, Lo
 
     @Query("select tp from Tasa_Producto tp where tp.producto.id=:id and tp.fecha_dia=:fecha")
     public Tasa_Producto consultarTasaPorProductoYFecha(@Param("id") Long id, @Param("fecha") LocalDate fecha);
+
+    @Query("SELECT avg(t.tasa_diaria) from Tasa_Producto t WHERE t.producto.id=:idProducto ")
+    public BigDecimal consultarPromedioTasaProducto(@Param("idProducto") Long idProducto);
+
 }

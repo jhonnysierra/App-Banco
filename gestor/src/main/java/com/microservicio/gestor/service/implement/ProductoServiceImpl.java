@@ -5,10 +5,10 @@ import com.microservicio.gestor.exception.excepcionpersonalizada.BadRequestExcep
 import com.microservicio.gestor.exception.excepcionpersonalizada.ConflictExcepcion;
 import com.microservicio.gestor.exception.excepcionpersonalizada.NotFoundException;
 import com.microservicio.gestor.model.Producto;
-import com.microservicio.gestor.model.dto.GestorDTO;
 import com.microservicio.gestor.model.dto.ProductoDTO;
 import com.microservicio.gestor.repository.GestorRepository;
 import com.microservicio.gestor.repository.ProductoRepository;
+import com.microservicio.gestor.repository.Tasa_ProductoRepository;
 import com.microservicio.gestor.service.IProductoService;
 import com.microservicio.gestor.service.mapper.ProductoMapper;
 import org.springframework.stereotype.Service;
@@ -27,18 +27,20 @@ public class ProductoServiceImpl implements IProductoService {
     private final ProductoRepository productoRepository;
     private final GestorRepository gestorRepository;
     private final ProductoMapper productoMapper;
+    private final Tasa_ProductoRepository tasaProductoRepository;
 
     /**
      * Metodo constructor
-     *
-     * @param productoRepository repositorio para consultar metodos de jpa
+     *  @param productoRepository repositorio para consultar metodos de jpa
      * @param gestorRepository   repositorio para consultar metodos de jpa
      * @param productoMapper     mapper para pasar de dto a entidad
+     * @param tasaProductoRepository
      */
-    public ProductoServiceImpl(ProductoRepository productoRepository, GestorRepository gestorRepository, ProductoMapper productoMapper) {
+    public ProductoServiceImpl(ProductoRepository productoRepository, GestorRepository gestorRepository, ProductoMapper productoMapper, Tasa_ProductoRepository tasaProductoRepository) {
         this.productoRepository = productoRepository;
         this.gestorRepository = gestorRepository;
         this.productoMapper = productoMapper;
+        this.tasaProductoRepository = tasaProductoRepository;
     }
 
 
@@ -71,18 +73,18 @@ public class ProductoServiceImpl implements IProductoService {
     /**
      * Metodo que permite consultar los productos pendientes por asignar tasa de un gestor
      *
-     * @param gestorDTO gestor al cual se le van a consultar los productos pendientes
+     * @param
      * @return lista de productos pendientes por asignarles tasa el dia actual
      */
     @Override
-    public List<ProductoDTO> consultarProductosParaAsignarTasas(GestorDTO gestorDTO) {
-        if (gestorDTO.getId() == null) {
+    public List<ProductoDTO> consultarProductosParaAsignarTasas(Long idGestor) {
+        if (idGestor == null) {
             throw new BadRequestException("Faltan datos de gestor para consultar productos");
         }
-        if (gestorRepository.findById(gestorDTO.getId()).isEmpty()) {
+        if (gestorRepository.findById(idGestor).isEmpty()) {
             throw new NotFoundException("El gestor no existe");
         } else {
-            List<Producto> productosSinTasa = productoRepository.consultarProductosSinTasaAsignada(gestorDTO.getId(), LocalDate.now());
+            List<Producto> productosSinTasa = productoRepository.consultarProductosSinTasaAsignada(idGestor, LocalDate.now());
             return productoMapper.convertirListaEntidadAListaDTO(productosSinTasa);
         }
     }
@@ -95,7 +97,13 @@ public class ProductoServiceImpl implements IProductoService {
     @Override
     public List<ProductoDTO> consultarProductos() {
         List<Producto> productos = productoRepository.findAll();
-        return productoMapper.convertirListaEntidadAListaDTO(productos);
+        List<ProductoDTO> productoDTOS=productoMapper.convertirListaEntidadAListaDTO(productos);
+
+        for(ProductoDTO productoDTO:productoDTOS){
+
+            productoDTO.setBalanceProducto(tasaProductoRepository.consultarPromedioTasaProducto(productoDTO.getId()));
+        }
+        return productoDTOS;
     }
 
     /**

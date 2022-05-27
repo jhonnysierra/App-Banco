@@ -4,6 +4,8 @@ package com.microservicio.gestor.model.dto;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+
 /**
  * Dto para transferir datos de un producto de inversión
  *
@@ -24,4 +26,5 @@ public class ProductoDTO {
     private Long ciudad;
     private String nombreCiudad;
     private String origen;
+    private BigDecimal balanceProducto;
 }

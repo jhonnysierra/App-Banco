@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 /**
- * @author <a href="julian.rivera@segurosbolivar.com"> Julian M Rivera</a>
+ * @author <a href="jhonnysierrap@gmail.com"> Jhonny Sierra P</a>
  * @version 1.0
  * @project empresa-de-inversion
  * @class ProductoRepository

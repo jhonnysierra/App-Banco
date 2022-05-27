@@ -1,7 +1,7 @@
 package com.microservicio.gestor.service;
 
 
-import com.microservicio.gestor.model.dto.GestorDTO;
+
 import com.microservicio.gestor.model.dto.ProductoDTO;
 
 import java.util.List;
@@ -30,10 +30,10 @@ public interface IProductoService {
     /**
      * Metodo que permite consultar los productos pendientes por asignar tasa de un gestor
      *
-     * @param gestorDTO gestor al cual se le van a consultar los productos pendientes
+     * @param idGestor id del gestor al cual se le van a consultar los productos pendientes
      * @return lista de productos pendientes por asignarles tasa el dia actual
      */
-    public List<ProductoDTO> consultarProductosParaAsignarTasas(GestorDTO gestorDTO) ;
+    public List<ProductoDTO> consultarProductosParaAsignarTasas(Long idGestor) ;
 
     /**
      * Metodo que permite listar todos el portafolio de productos de la empresa

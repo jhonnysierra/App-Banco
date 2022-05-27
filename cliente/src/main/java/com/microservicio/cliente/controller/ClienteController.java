@@ -4,11 +4,21 @@ import com.microservicio.cliente.model.dto.ClienteDTO;
 import com.microservicio.cliente.service.IClienteService;
 import org.springframework.web.bind.annotation.*;
 
+
+//Para acceder desde el front o una direccion externa.
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/inversiones/api/1.0")
 public class ClienteController {
     private final IClienteService iClienteService;
 
+    /**
+     * Metodo constructor
+     *
+     * @param iClienteService {@link IClienteService}
+     * @author <a href="jhonnysierrap@gmail.com"> Jhonny Sierra P</a>
+     * @date 07-05-2022
+     */
     public ClienteController(IClienteService iClienteService) {
         this.iClienteService = iClienteService;
     }

@@ -14,6 +14,7 @@ import java.util.List;
  * @author: Julian Mauricio Rivera
  * @version: v1.0
  */
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/techcamp/api/1.0")
 public class ProductoController {
@@ -52,11 +53,11 @@ public class ProductoController {
     /**
      * Metodo que permite consultar los productos pendientes por asignar tasa de un gestor
      *
-     * @param gestorDTO gestor al cual se le van a consultar los productos pendientes
+     * @param
      * @return lista de productos pendientes por asignarles tasa el dia actual
      */
-    @GetMapping("/consultar/productos/tasa")
-    public List<ProductoDTO> consultarProductostasaAsignada(@RequestBody GestorDTO gestorDTO) {
-        return iProductoService.consultarProductosParaAsignarTasas(gestorDTO);
+    @GetMapping("/consultar/productos/tasa/{idGestor}")
+    public List<ProductoDTO> consultarProductostasaAsignada(@PathVariable Long idGestor) {
+        return iProductoService.consultarProductosParaAsignarTasas(idGestor);
     }
 }

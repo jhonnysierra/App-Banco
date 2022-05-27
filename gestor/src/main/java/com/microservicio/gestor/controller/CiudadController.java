@@ -13,6 +13,7 @@ import java.util.List;
  * @author: Julian Mauricio Rivera
  * @version: v1.0
  */
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/techcamp/api/1.0")
 public class CiudadController {
