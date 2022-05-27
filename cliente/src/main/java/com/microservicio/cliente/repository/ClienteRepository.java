@@ -22,6 +22,10 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
      */
     public Cliente findByCedula(Long id);
 
-    //Permite buscar un correo en la tabla cliente
+    /**
+     * Permite buscar un cliente por correo electronico
+     * @param correo Correo electronico del cliente a buscar
+     * @return Objeto de la clase {@link Cliente}
+     */
     public Cliente findByCorreo(String correo);
 }

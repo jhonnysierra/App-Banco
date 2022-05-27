@@ -2,6 +2,7 @@ package com.microservicio.cliente.repository;
 
 import com.microservicio.cliente.model.Inversion;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -36,6 +37,10 @@ public interface InversionRepository extends JpaRepository<Inversion, Long> {
      */
     @Query(value = "SELECT CONSULTAR_SALDO_INICIAL(:idInversion,:fechaActivacion) FROM DUAL", nativeQuery = true)
     public BigDecimal obtenerSaldoInicial(@Param("idInversion") Long idInversion, @Param("fechaActivacion") LocalDate fechaActivacion);
+
+    @Modifying //Si es un native y se va a actualizar o insertar se debe poner esta anotacion
+    @Query(value = "CALL PKG_RENDIMIENTO.CALCULAR_RENDIMIENTO()",nativeQuery = true)
+    void procedimientoPrueba();
 
     //HACER ESTA GRAN PERRA CON NATIVE QUERY
     /*
