@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/inversiones/api/1.0")
 public class InversionController {
@@ -17,21 +18,6 @@ public class InversionController {
 
     public InversionController(IInversionService iInversionService) {
         this.iInversionService = iInversionService;
-    }
-
-    @PostMapping("/crear/inversion/inicial")
-    public InversionDTO crearInversionInicial(@RequestBody InversionDTO inversionDTO){
-        return iInversionService.crearInversionInicial(inversionDTO);
-    }
-
-    @GetMapping("/consultar/saldo/{id}")
-    public BigDecimal consultarSaldoCliente(@PathVariable Long id){
-        return iInversionService.consultarSaldoCliente(id);
-    }
-
-    @PostMapping("/crear/recomposicion/{idCliente}")
-    public List<InversionDTO> hacerRecomposicionCliente(@RequestBody List<InversionDTO> inversionesDTOS, @PathVariable Long idCliente) {
-        return iInversionService.hacerRecomposicionCliente(inversionesDTOS, idCliente);
     }
 
     /**
@@ -58,6 +44,39 @@ public class InversionController {
     @GetMapping("/validar/recomposicion/{idCliente}")
     public Boolean validarRecomposicion(@PathVariable Long idCliente) {
         return iInversionService.ValidarRecomposicion(idCliente);
+    }
+
+    /**
+     * Metodo que permite consultar el saldo del cliente
+     * @param id Identificador del cliente
+     * @return {@link BigDecimal} Devuelve el saldo del cliente
+     */
+    @GetMapping("/consultar/saldo/{id}")
+    public BigDecimal consultarSaldoCliente(@PathVariable Long id){
+        return iInversionService.consultarSaldoCliente(id);
+    }
+
+    /**
+     * Metodo que permite crear la inversion inicial
+     * 
+     * @param inversionDTO {@link InversionDTO} Datos para crear la inversion inicial
+     * @return {@link InversionDTO} Datos almacenados de la inversion
+     */
+    @PostMapping("/crear/inversion/inicial")
+    public InversionDTO crearInversionInicial(@RequestBody InversionDTO inversionDTO){
+        return iInversionService.crearInversionInicial(inversionDTO);
+    }
+
+    /**
+     * Metodo que permite que un cliente haga una recomposicion
+     *
+     * @param inversionesDTOS {@link InversionDTO} Lista de inversiones del cliente
+     * @param idCliente {@link Long} Identificador del cliente del cliente
+     * @return {@link InversionDTO} Lista de inversiones en las que hizo recomposicion
+     */
+    @PostMapping("/crear/recomposicion/{idCliente}")
+    public List<InversionDTO> hacerRecomposicionCliente(@RequestBody List<InversionDTO> inversionesDTOS, @PathVariable Long idCliente) {
+        return iInversionService.hacerRecomposicionCliente(inversionesDTOS, idCliente);
     }
 
 }
