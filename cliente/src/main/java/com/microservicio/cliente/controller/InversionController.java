@@ -43,7 +43,7 @@ public class InversionController {
      */
     @GetMapping("/validar/recomposicion/{idCliente}")
     public Boolean validarRecomposicion(@PathVariable Long idCliente) {
-        return iInversionService.ValidarRecomposicion(idCliente);
+        return iInversionService.validarRecomposicion(idCliente);
     }
 
     /**

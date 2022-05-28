@@ -187,6 +187,15 @@ public class InversionServiceImpl implements IInversionService {
     }
 
     /**
+     * Metodo que permite ejecutar el procedimiento almacenado para calcular los rendimientos
+     */
+    @Transactional
+    @Override
+    public void calcularRendimientos() {
+        this.inversionRepository.procedimientoPrueba();
+    }
+
+    /**
      * Metodo que permite consultar las inversiones que un cliente tiene activas o por activar
      *
      * @param idCliente id del cliente a consultar
@@ -233,7 +242,7 @@ public class InversionServiceImpl implements IInversionService {
      * @date 12-05-2022
      */
     @Override
-    public Boolean ValidarRecomposicion(Long idCliente) {
+    public Boolean validarRecomposicion(Long idCliente) {
         if (idCliente != null) {
             if (!clienteRepository.findById(idCliente).isEmpty()) {
                 List<Inversion> listaInversion = inversionRepository.consultarInversionesCliente(idCliente);
