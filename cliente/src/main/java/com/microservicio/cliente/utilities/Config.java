@@ -10,4 +10,6 @@ import org.springframework.stereotype.Component;
 public class Config {
 
     private final long CIUDAD_POR_DEFECTO_PRODUCTO = 1121;
+    private final String ESTADO_ACTIVO = "INVERSION ACTIVA";
+    private final String ESTADO_EN_PROCESO = "EN PROCESO DE ACTIVACION";
 }

@@ -13,6 +13,7 @@ import com.microservicio.cliente.repository.InversionRepository;
 import com.microservicio.cliente.repository.ProductoRepository;
 import com.microservicio.cliente.service.IInversionService;
 import com.microservicio.cliente.service.mapper.InversionMapper;
+import com.microservicio.cliente.utilities.Config;
 import com.microservicio.cliente.utilities.Utilidades;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,12 +30,15 @@ public class InversionServiceImpl implements IInversionService {
     private final InversionMapper inversionMapper;
     private final Utilidades utilidades;
 
-    public InversionServiceImpl(InversionRepository inversionRepository, ClienteRepository clienteRepository, ProductoRepository productoRepository, InversionMapper inversionMapper, Utilidades utilidades) {
+    private final Config config;
+
+    public InversionServiceImpl(InversionRepository inversionRepository, ClienteRepository clienteRepository, ProductoRepository productoRepository, InversionMapper inversionMapper, Utilidades utilidades, Config config) {
         this.inversionRepository = inversionRepository;
         this.clienteRepository = clienteRepository;
         this.productoRepository = productoRepository;
         this.inversionMapper = inversionMapper;
         this.utilidades = utilidades;
+        this.config = config;
     }
 
     /**
@@ -187,15 +191,6 @@ public class InversionServiceImpl implements IInversionService {
     }
 
     /**
-     * Metodo que permite ejecutar el procedimiento almacenado para calcular los rendimientos
-     */
-    @Transactional
-    @Override
-    public void calcularRendimientos() {
-        this.inversionRepository.procedimientoPrueba();
-    }
-
-    /**
      * Metodo que permite consultar las inversiones que un cliente tiene activas o por activar
      *
      * @param idCliente id del cliente a consultar
@@ -211,9 +206,9 @@ public class InversionServiceImpl implements IInversionService {
                     int i = 0;
                     for (MisProductosDTO misProductosDTO : listaMisProductos) {
                         if (misProductosDTO.getFechaActivacion().isAfter(LocalDate.now())) {
-                            misProductosDTO.setEstado("EN PROCESO DE ACTIVACION");
+                            misProductosDTO.setEstado(config.getESTADO_EN_PROCESO());
                         } else {
-                            misProductosDTO.setEstado("INVERSION ACTIVA");
+                            misProductosDTO.setEstado(config.getESTADO_ACTIVO());
                         }
                         misProductosDTO.setSaldoInicialProducto
                                 (inversionRepository.obtenerSaldoInicial(
@@ -269,5 +264,14 @@ public class InversionServiceImpl implements IInversionService {
             throw new BadRequestException("Id de cliente no puede ser nulo");
         }
         return true;
+    }
+
+    /**
+     * Metodo que permite ejecutar el procedimiento almacenado para calcular los rendimientos
+     */
+    @Transactional
+    @Override
+    public void calcularRendimientos() {
+        this.inversionRepository.procedimientoPrueba();
     }
 }

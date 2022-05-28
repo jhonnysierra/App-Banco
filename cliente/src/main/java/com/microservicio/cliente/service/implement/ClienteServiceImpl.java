@@ -60,6 +60,11 @@ public class ClienteServiceImpl implements IClienteService {
         }
     }
 
+    /**
+     * Metodo que permite consultar un cliente
+     * @param id Identificador del cliente
+     * @return Objeto {@link ClienteDTO} con los datos del cliente encontrado
+     */
     @Override
     public ClienteDTO consultarCliente(Long id) {
         if (id != null) {
